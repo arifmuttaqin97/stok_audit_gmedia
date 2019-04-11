@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.arif.barangkonsumen.ApiResponse;
 import com.example.arif.barangkonsumen.R;
@@ -42,6 +43,8 @@ public class DetailGambarActivity extends AppCompatActivity {
     HashMap<String, String> hashMap = new HashMap<>();
 
     DetailGambarAdapter detailGambarAdapter;
+
+    String GAMBAR = "log_detailGambar";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -86,6 +89,7 @@ public class DetailGambarActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 if (response.body() != null) {
+                    String responseDetailGambar = response.body().getResponse().toString() + response.body().getMetadata().toString();
                     if (response.body().getResponse() instanceof LinkedTreeMap) {
                         LinkedTreeMap linkedTreeMap = (LinkedTreeMap) response.body().getResponse();
                         detailGambar.setText((String) linkedTreeMap.get("nama_barang"));
@@ -103,12 +107,16 @@ public class DetailGambarActivity extends AppCompatActivity {
                         detailGambarAdapter = new DetailGambarAdapter(arrayList1);
                         rvGambar.setAdapter(detailGambarAdapter);
                     }
+                    else{
+                        Toast.makeText(DetailGambarActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                        Log.d(GAMBAR, responseDetailGambar);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
-                Log.d("log_detailGambar", t.getLocalizedMessage());
+                Log.d(GAMBAR, t.getLocalizedMessage());
             }
         });
     }
