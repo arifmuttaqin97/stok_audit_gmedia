@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context=".data_barang.DataBarangActivity">
+    tools:context="id.net.gmedia.stokaudit.data_barang.DataBarangActivity">
 
     <TextView
         android:id="@+id/testDataBarang"

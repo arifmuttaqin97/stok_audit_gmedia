@@ -11,5 +11,3 @@
         android:contentDescription="Gambar"
         android:scaleType="fitCenter" />
 </LinearLayout>
-
-    <!--android:layout_height="200dp"-->

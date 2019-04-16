@@ -8,4 +8,5 @@
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="ifRoom" />
-</menu><!--android:iconifiedByDefault="false"-->
+</menu>
+    <!--android:iconifiedByDefault="false"-->

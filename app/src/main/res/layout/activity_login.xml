@@ -7,7 +7,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".login.LoginActivity">
+    tools:context="id.net.gmedia.stokaudit.login.LoginActivity">
 
     <ImageView
         android:layout_width="75dp"

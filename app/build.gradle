@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.arif.barangkonsumen"
+        applicationId "id.net.gmedia.stokaudit"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1

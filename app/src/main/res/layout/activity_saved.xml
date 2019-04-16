@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".detail_barang.SavedActivity">
+    tools:context="id.net.gmedia.stokaudit.detail_barang.SavedActivity">
 
     <LinearLayout
         android:id="@+id/layoutSaved"
