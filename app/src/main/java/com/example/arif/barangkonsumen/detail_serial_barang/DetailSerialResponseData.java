@@ -1,7 +1,11 @@
 package com.example.arif.barangkonsumen.detail_serial_barang;
 
-public class DetailSerialResponseData {
-    String id_serial, id_barang, id_lokasi, nama_barang, serial;
+class DetailSerialResponseData {
+    String id_serial;
+    String serial;
+    private String id_barang;
+    private String id_lokasi;
+    private String nama_barang;
 
     DetailSerialResponseData(String id_serial, String id_barang, String id_lokasi, String nama_barang, String serial) {
         this.id_serial = id_serial;

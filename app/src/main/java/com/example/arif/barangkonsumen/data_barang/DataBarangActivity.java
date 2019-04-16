@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,31 +51,24 @@ import retrofit2.Response;
 
 public class DataBarangActivity extends AppCompatActivity {
 
-    TextView testDataBarang, testBarcode;
-    Button btnBarcode, btnPicture, btnSave;
-
-    String barcodes = "";
-
-    ArrayList<String> arrayList = new ArrayList<>();
-
-    RecyclerView rvGambar;
-
-    GambarAdapter gambarAdapter;
-
-    String kodeBarang = "";
-
-    ArrayList<HashMap<String, Integer>> idResponse = new ArrayList<>();
-
-    Map<String, String> headerMap = new HashMap<>();
-
-    SharedPreferences mLogin;
-
-    HashMap<String, Object> hashTambahBarang = new HashMap<>();
-
-    String DATA_BARANG = "log_dataBarang";
+    private final ArrayList<String> arrayList = new ArrayList<>();
+    private final ArrayList<HashMap<String, Integer>> idResponse = new ArrayList<>();
+    private final Map<String, String> headerMap = new HashMap<>();
+    private final HashMap<String, Object> hashTambahBarang = new HashMap<>();
+    private final String DATA_BARANG = "log_dataBarang";
+    private TextView testDataBarang;
+    private TextView testBarcode;
+    private Button btnSave;
+    private RelativeLayout btnBarcode;
+    private RelativeLayout btnPicture;
+    private String barcodes = "";
+    private RecyclerView rvGambar;
+    private GambarAdapter gambarAdapter;
+    private String kodeBarang = "";
+    private SharedPreferences mLogin;
 
     //    maxSize = ukuran pixel maksimal
-    public static Bitmap resizeBitmap(Bitmap image, int maxSize) {
+    private static Bitmap resizeBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -260,14 +254,14 @@ public class DataBarangActivity extends AppCompatActivity {
         }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
 
-    public String getRealPathFromURI(Uri uri) {
+    private String getRealPathFromURI(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         int idx = 0;
         if (cursor != null) {

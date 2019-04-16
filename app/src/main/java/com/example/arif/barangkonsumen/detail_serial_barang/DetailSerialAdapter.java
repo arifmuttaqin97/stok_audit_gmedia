@@ -13,10 +13,10 @@ import com.example.arif.barangkonsumen.detail_gambar.DetailGambarActivity;
 
 import java.util.List;
 
-public class DetailSerialAdapter extends BaseAdapter {
+class DetailSerialAdapter extends BaseAdapter {
 
-    private Context context;
-    private List<DetailSerialResponseData> customer;
+    private final Context context;
+    private final List<DetailSerialResponseData> customer;
 
     DetailSerialAdapter(Context context, List<DetailSerialResponseData> customer) {
         this.context = context;

@@ -3,58 +3,131 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".login.LoginActivity">
 
     <ImageView
-        android:id="@+id/logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_margin="65dp"
+        android:layout_margin="25dp"
         android:contentDescription="Logo"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:src="@drawable/putihicon" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GMEDIA STOK AUDIT"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/userLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="25dp"
+        android:contentDescription="Logo"
+        android:scaleType="fitXY"
+        android:src="@drawable/image" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/logoUser"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_margin="10dp"
-            android:hint="Username"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black" />
+            android:contentDescription="Logo"
+            android:scaleType="fitXY"
+            android:src="@drawable/iconuser" />
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/passLogin"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layoutUser"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black" />
+            android:layout_toEndOf="@id/logoUser"
+            android:layout_toRightOf="@id/logoUser">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/userLogin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@color/zxing_transparent"
+                android:hint="Username"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="225dp"
+            android:layout_height="1dp"
+            android:layout_below="@id/layoutUser"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/logoPass"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="10dp"
+            android:contentDescription="Logo"
+            android:scaleType="fitXY"
+            android:src="@drawable/iconpassword" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layoutPass"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/logoPass"
+            android:layout_toRightOf="@id/logoPass">
+
+            <EditText
+                android:id="@+id/passLogin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@color/zxing_transparent"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="225dp"
+            android:layout_height="1dp"
+            android:layout_below="@id/layoutPass"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/white" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btnLogin"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Login" />
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_margin="40dp"
+        android:background="@drawable/button_orange"
+        android:text="Login"
+        android:textColor="@android:color/white" />
 </LinearLayout>

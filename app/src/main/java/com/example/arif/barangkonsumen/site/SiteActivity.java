@@ -38,31 +38,24 @@ import retrofit2.Response;
 
 public class SiteActivity extends AppCompatActivity {
 
-    TextView testSite;
-    ListView listSite;
+    private final Integer count = 15;
+    private final String SITE = "log_site";
+    private final Map<String, String> headerMap = new HashMap<>();
+    private TextView testSite;
+    private ListView listSite;
+    private SiteResponseData site;
+    private ArrayList<SiteResponseData> arrayCustomerSite;
+    private SiteAdapter siteAdapter;
+    private HashMap<String, String> hashCustomerSite;
+    private Integer startIndex = 0;
+    private SharedPreferences mLogin;
 
-    SiteResponseData site;
-    ArrayList<SiteResponseData> arrayCustomerSite;
+    private ProgressBar progressBar;
 
-    SiteAdapter siteAdapter;
+    private String customer;
+    private String nama_customer;
 
-    HashMap<String, String> hashCustomerSite;
-
-    Integer startIndex = 0;
-    Integer count = 15;
-
-    String SITE = "log_site";
-
-    Map<String, String> headerMap = new HashMap<>();
-
-    SharedPreferences mLogin;
-
-    ProgressBar progressBar;
-
-    String customer;
-    String nama_customer;
-
-    SearchView searchView;
+    private SearchView searchView;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -100,7 +93,7 @@ public class SiteActivity extends AppCompatActivity {
         testSite.setText(nama_customer);
     }
 
-    void getSite(final String search, final String params) {
+    private void getSite(final String search, final String params) {
         arrayCustomerSite = new ArrayList<>();
         hashCustomerSite = new HashMap<>();
 
@@ -166,7 +159,7 @@ public class SiteActivity extends AppCompatActivity {
         });
     }
 
-    void getMore(String searchMore, String params) {
+    private void getMore(String searchMore, String params) {
         arrayCustomerSite = new ArrayList<>();
         hashCustomerSite = new HashMap<>();
 

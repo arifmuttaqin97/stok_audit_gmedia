@@ -1,6 +1,6 @@
 package com.example.arif.barangkonsumen.customer;
 
-public class CustomerResponseData {
+class CustomerResponseData {
     String customer_id, customer_name, alamat;
 
     CustomerResponseData(String customer_id, String customer_name, String alamat) {

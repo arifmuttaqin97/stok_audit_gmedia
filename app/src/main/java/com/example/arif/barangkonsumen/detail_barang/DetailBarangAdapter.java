@@ -13,10 +13,10 @@ import com.example.arif.barangkonsumen.detail_serial_barang.DetailSavedActivity;
 
 import java.util.List;
 
-public class DetailBarangAdapter extends BaseAdapter {
+class DetailBarangAdapter extends BaseAdapter {
 
-    private Context context;
-    private List<DetailBarangResponseData> customer;
+    private final Context context;
+    private final List<DetailBarangResponseData> customer;
 
     DetailBarangAdapter(Context context, List<DetailBarangResponseData> customer) {
         this.context = context;

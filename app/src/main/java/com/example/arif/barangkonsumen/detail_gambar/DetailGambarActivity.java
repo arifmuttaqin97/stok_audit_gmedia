@@ -31,20 +31,14 @@ import retrofit2.Response;
 
 public class DetailGambarActivity extends AppCompatActivity {
 
-    TextView detailGambar;
-    RecyclerView rvGambar;
-
-    SharedPreferences mLogin;
-
-    Map<String, String> headerMap = new HashMap<>();
-
-    String id_serial;
-
-    HashMap<String, String> hashMap = new HashMap<>();
-
-    DetailGambarAdapter detailGambarAdapter;
-
-    String GAMBAR = "log_detailGambar";
+    private final Map<String, String> headerMap = new HashMap<>();
+    private final HashMap<String, String> hashMap = new HashMap<>();
+    private final String GAMBAR = "log_detailGambar";
+    private TextView detailGambar;
+    private RecyclerView rvGambar;
+    private SharedPreferences mLogin;
+    private String id_serial;
+    private DetailGambarAdapter detailGambarAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -106,8 +100,7 @@ public class DetailGambarActivity extends AppCompatActivity {
                         }
                         detailGambarAdapter = new DetailGambarAdapter(arrayList1);
                         rvGambar.setAdapter(detailGambarAdapter);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(DetailGambarActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
                         Log.d(GAMBAR, responseDetailGambar);
                     }

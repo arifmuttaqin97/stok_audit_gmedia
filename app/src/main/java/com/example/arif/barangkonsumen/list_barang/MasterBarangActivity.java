@@ -37,30 +37,22 @@ import retrofit2.Response;
 
 public class MasterBarangActivity extends AppCompatActivity {
 
-    ListView listMaster;
+    private final Integer count = 15;
+    private final String MASTER = "log_master";
+    private final Map<String, String> headerMap = new HashMap<>();
+    private ListView listMaster;
+    private ListBarangResponseData listBarang;
+    private ArrayList<ListBarangResponseData> arrayListBarang;
+    private ListBarangAdapter listBarangAdapter;
+    private HashMap<String, String> hashListBarang;
+    private Integer startIndex = 0;
+    private String id_lokasi = "";
+    private String nama_site = "";
+    private SharedPreferences mLogin;
 
-    ListBarangResponseData listBarang;
-    ArrayList<ListBarangResponseData> arrayListBarang;
+    private ProgressBar progressBar;
 
-    ListBarangAdapter listBarangAdapter;
-
-    HashMap<String, String> hashListBarang;
-
-    Integer startIndex = 0;
-    Integer count = 15;
-
-    String MASTER = "log_master";
-
-    String id_lokasi = "";
-    String nama_site = "";
-
-    Map<String, String> headerMap = new HashMap<>();
-
-    SharedPreferences mLogin;
-
-    ProgressBar progressBar;
-
-    SearchView searchView;
+    private SearchView searchView;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -95,7 +87,7 @@ public class MasterBarangActivity extends AppCompatActivity {
         nama_site = getIntent().getStringExtra("nama_site");
     }
 
-    void getMaster(final String search) {
+    private void getMaster(final String search) {
         arrayListBarang = new ArrayList<>();
         hashListBarang = new HashMap<>();
 
@@ -176,7 +168,7 @@ public class MasterBarangActivity extends AppCompatActivity {
         });
     }
 
-    void getMore(String search) {
+    private void getMore(String search) {
         arrayListBarang = new ArrayList<>();
         hashListBarang = new HashMap<>();
 

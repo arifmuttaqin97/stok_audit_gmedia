@@ -6,12 +6,11 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:orderInCategory="100"
         android:title="Search"
-        app:showAsAction="ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/logout"
+        android:orderInCategory="100"
         android:title="Logout"
-        app:showAsAction="collapseActionView"
-        android:orderInCategory="100"/>
-</menu>
-<!--android:iconifiedByDefault="false"-->
+        app:showAsAction="collapseActionView" />
+</menu><!--android:iconifiedByDefault="false"-->

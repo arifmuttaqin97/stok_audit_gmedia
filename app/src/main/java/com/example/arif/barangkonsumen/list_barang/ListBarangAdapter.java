@@ -13,12 +13,12 @@ import com.example.arif.barangkonsumen.data_barang.DataBarangActivity;
 
 import java.util.List;
 
-public class ListBarangAdapter extends BaseAdapter {
+class ListBarangAdapter extends BaseAdapter {
 
-    private Context context;
-    private List<ListBarangResponseData> customer;
-    private String id_lokasi;
-    private String nama_site;
+    private final Context context;
+    private final List<ListBarangResponseData> customer;
+    private final String id_lokasi;
+    private final String nama_site;
 
     ListBarangAdapter(Context context, List<ListBarangResponseData> customer, String id_lokasi, String nama_site) {
         this.context = context;

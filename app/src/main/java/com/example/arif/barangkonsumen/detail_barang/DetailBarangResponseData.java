@@ -1,6 +1,6 @@
 package com.example.arif.barangkonsumen.detail_barang;
 
-public class DetailBarangResponseData {
+class DetailBarangResponseData {
     String id_barang, id_lokasi, nama_barang, total_serial;
 
     DetailBarangResponseData(String id_barang, String id_lokasi, String nama_barang, String total_serial) {

@@ -39,29 +39,22 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView listMain;
+    private final Integer count = 15;
+    private final String CUSTOMER = "log_customer";
+    private final Map<String, String> headerMap = new HashMap<>();
+    private ListView listMain;
+    private HashMap<String, String> hashCustomer;
+    private CustomerResponseData customer;
+    private ArrayList<CustomerResponseData> arrayCustomer;
+    private CustomerAdapter customerAdapter;
+    private Integer startIndex = 0;
+    private SharedPreferences mLogin;
 
-    HashMap<String, String> hashCustomer;
+    private SharedPreferences.Editor editor;
 
-    CustomerResponseData customer;
-    ArrayList<CustomerResponseData> arrayCustomer;
+    private ProgressBar progressBar;
 
-    CustomerAdapter customerAdapter;
-
-    Integer startIndex = 0;
-    Integer count = 15;
-
-    String CUSTOMER = "log_customer";
-
-    Map<String, String> headerMap = new HashMap<>();
-
-    SharedPreferences mLogin;
-
-    SharedPreferences.Editor editor;
-
-    ProgressBar progressBar;
-
-    SearchView searchView;
+    private SearchView searchView;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -89,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
     }
 
-    void getCustomer(final String search) {
+    private void getCustomer(final String search) {
         arrayCustomer = new ArrayList<>();
         hashCustomer = new HashMap<>();
 
@@ -151,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void getMore(String searchMore) {
+    private void getMore(String searchMore) {
         arrayCustomer = new ArrayList<>();
         hashCustomer = new HashMap<>();
 

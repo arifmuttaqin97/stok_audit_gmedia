@@ -34,28 +34,20 @@ import retrofit2.Response;
 
 public class DetailSavedActivity extends AppCompatActivity {
 
-    TextView namaBarang;
-
-    ListView listSerial;
-    ProgressBar progressBar;
-
-    Map<String, String> headerMap = new HashMap<>();
-
-    SharedPreferences mLogin;
-
-    DetailSerialResponseData serial;
-    ArrayList<DetailSerialResponseData> arraySerial;
-    HashMap<String, String> hashSerial;
-
-    DetailSerialAdapter serialAdapter;
-
-    Integer startIndex = 0;
-    Integer count = 15;
-
-    String SERIAL = "log_serial";
-
-    String id_lokasi;
-    String id_barang;
+    private final Map<String, String> headerMap = new HashMap<>();
+    private final Integer count = 15;
+    private final String SERIAL = "log_serial";
+    private TextView namaBarang;
+    private ListView listSerial;
+    private ProgressBar progressBar;
+    private SharedPreferences mLogin;
+    private DetailSerialResponseData serial;
+    private ArrayList<DetailSerialResponseData> arraySerial;
+    private HashMap<String, String> hashSerial;
+    private DetailSerialAdapter serialAdapter;
+    private Integer startIndex = 0;
+    private String id_lokasi;
+    private String id_barang;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -92,7 +84,7 @@ public class DetailSavedActivity extends AppCompatActivity {
         headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
     }
 
-    void getSerial() {
+    private void getSerial() {
         arraySerial = new ArrayList<>();
         hashSerial = new HashMap<>();
 
@@ -157,7 +149,7 @@ public class DetailSavedActivity extends AppCompatActivity {
         });
     }
 
-    void getMore() {
+    private void getMore() {
         arraySerial = new ArrayList<>();
         hashSerial = new HashMap<>();
 

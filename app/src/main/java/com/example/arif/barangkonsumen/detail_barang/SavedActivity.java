@@ -41,32 +41,25 @@ import retrofit2.Response;
 
 public class SavedActivity extends AppCompatActivity {
 
-    TextView testSaved;
-    ListView listSaved;
-    FloatingActionButton btnAdd;
+    private final Integer count = 15;
+    private final String SAVE = "log_save";
+    private final Map<String, String> headerMap = new HashMap<>();
+    private TextView testSaved;
+    private ListView listSaved;
+    private FloatingActionButton btnAdd;
+    private DetailBarangResponseData detailBarang;
+    private ArrayList<DetailBarangResponseData> arrayDetailBarang;
+    private DetailBarangAdapter detailBarangAdapter;
+    private HashMap<String, String> hashDetailBarang;
+    private Integer startIndex = 0;
+    private SharedPreferences mLogin;
 
-    DetailBarangResponseData detailBarang;
-    ArrayList<DetailBarangResponseData> arrayDetailBarang;
+    private ProgressBar progressBar;
 
-    DetailBarangAdapter detailBarangAdapter;
+    private String site;
+    private String nama_site;
 
-    HashMap<String, String> hashDetailBarang;
-
-    Integer startIndex = 0;
-    Integer count = 15;
-
-    String SAVE = "log_save";
-
-    Map<String, String> headerMap = new HashMap<>();
-
-    SharedPreferences mLogin;
-
-    ProgressBar progressBar;
-
-    String site;
-    String nama_site;
-
-    SearchView searchView;
+    private SearchView searchView;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -114,7 +107,7 @@ public class SavedActivity extends AppCompatActivity {
         });
     }
 
-    void getDetailBarang(final String search, final String params) {
+    private void getDetailBarang(final String search, final String params) {
         arrayDetailBarang = new ArrayList<>();
         hashDetailBarang = new HashMap<>();
 
@@ -178,7 +171,7 @@ public class SavedActivity extends AppCompatActivity {
         });
     }
 
-    void getMore(String search, String params) {
+    private void getMore(String search, String params) {
         arrayDetailBarang = new ArrayList<>();
         hashDetailBarang = new HashMap<>();
 

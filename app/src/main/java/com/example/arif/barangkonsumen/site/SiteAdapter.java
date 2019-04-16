@@ -13,10 +13,10 @@ import com.example.arif.barangkonsumen.detail_barang.SavedActivity;
 
 import java.util.List;
 
-public class SiteAdapter extends BaseAdapter {
+class SiteAdapter extends BaseAdapter {
 
-    private Context context;
-    private List<SiteResponseData> customer;
+    private final Context context;
+    private final List<SiteResponseData> customer;
 
     SiteAdapter(Context context, List<SiteResponseData> customer) {
         this.context = context;

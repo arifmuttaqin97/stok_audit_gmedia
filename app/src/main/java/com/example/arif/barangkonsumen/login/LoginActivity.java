@@ -29,14 +29,13 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText username, password;
-    Button btnLogin;
-
-    String tmpUser, tmpPass;
-
-    SharedPreferences mLogin;
-
-    String LOGIN = "log_login";
+    private final String LOGIN = "log_login";
+    private EditText username;
+    private EditText password;
+    private Button btnLogin;
+    private String tmpUser;
+    private String tmpPass;
+    private SharedPreferences mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

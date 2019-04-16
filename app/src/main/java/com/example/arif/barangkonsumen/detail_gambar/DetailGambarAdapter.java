@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DetailGambarAdapter extends RecyclerView.Adapter<DetailGambarAdapter.ViewHolder> {
 
-    private List detailGambar;
+    private final List detailGambar;
 
     DetailGambarAdapter(List detailGambar) {
         this.detailGambar = detailGambar;
@@ -39,8 +39,8 @@ public class DetailGambarAdapter extends RecyclerView.Adapter<DetailGambarAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        Context context;
+        final ImageView imageView;
+        final Context context;
 
         ViewHolder(View v) {
             super(v);

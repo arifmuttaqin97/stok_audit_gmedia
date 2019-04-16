@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class GambarAdapter extends RecyclerView.Adapter<GambarAdapter.ViewHolder> {
 
-    private ArrayList<String> arrayGambar;
+    private final ArrayList<String> arrayGambar;
 
     GambarAdapter(ArrayList<String> arrayGambar) {
         this.arrayGambar = arrayGambar;
@@ -38,7 +38,7 @@ public class GambarAdapter extends RecyclerView.Adapter<GambarAdapter.ViewHolder
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView gambar;
+        final ImageView gambar;
 
         ViewHolder(View v) {
             super(v);

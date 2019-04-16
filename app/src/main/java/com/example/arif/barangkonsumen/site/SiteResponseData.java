@@ -1,6 +1,6 @@
 package com.example.arif.barangkonsumen.site;
 
-public class SiteResponseData {
+class SiteResponseData {
     String id_site, service_id, nama_site, alamat_site, kota_site, telp_site;
 
     SiteResponseData(String id_site, String service_id, String nama_site, String alamat_site, String kota_site, String telp_site) {

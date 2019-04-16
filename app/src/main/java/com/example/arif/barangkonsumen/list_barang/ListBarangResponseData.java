@@ -1,6 +1,6 @@
 package com.example.arif.barangkonsumen.list_barang;
 
-public class ListBarangResponseData {
+class ListBarangResponseData {
     String id_header,
             nama_barang,
             merk,
