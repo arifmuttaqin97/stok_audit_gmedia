@@ -24,32 +24,32 @@ public interface RetrofitService {
             "Timestamp: 11017201850101101",
             "Signature: FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE="
     })
-    @POST("Authentication/index")
+    @POST("authentication/index")
     Call<ApiResponse> login(@Body HashMap<String, String> params);
 
-    @POST("Customer/index")
+    @POST("customer/index")
     Call<ApiResponse> customer(@HeaderMap Map<String, String> headers, @Body HashMap<String, String> params);
 
-    @POST("Customer/list_site")
+    @POST("customer/list_site")
     Call<ApiResponse> customerSite(@HeaderMap Map<String, String> headers, @Body HashMap<String, String> params);
 
-    @POST("Barang/detail_barang")
+    @POST("barang/detail_barang")
     Call<ApiResponse> detailBarang(@HeaderMap Map<String, String> headers, @Body HashMap<String, String> params);
 
-    @POST("Barang/index")
+    @POST("barang/index")
     Call<ApiResponse> listBarang(@HeaderMap Map<String, String> headers, @Body HashMap<String, String> params);
 
     @Multipart
-    @POST("Barang/upload_foto")
+    @POST("barang/upload_foto")
     Call<ApiResponse> uploadFoto(@HeaderMap Map<String, String> headers,
                                  @Part MultipartBody.Part photo, @Part("id_barang") RequestBody id_barang);
 
-    @POST("Barang/tambah_barang")
+    @POST("barang/tambah_barang")
     Call<ApiResponse> tambahBarang(@HeaderMap Map<String, String> headers, @Body HashMap<String, Object> params);
 
-    @POST("Barang/detail_serial_barang")
+    @POST("barang/detail_serial_barang")
     Call<ApiResponse> detailSerial(@HeaderMap Map<String, String> headers, @Body HashMap<String, String> params);
 
-    @POST("Barang/detail_gambar_serial_barang")
+    @POST("barang/detail_gambar_serial_barang")
     Call<ApiResponse> detailGambar(@HeaderMap Map<String, String> headers, @Body HashMap<String, String> params);
 }

@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitBuilder {
 
-    private static final String BASE_URL = "http://gmedia.bz/sam/api/";
+    private static final String BASE_URL = "https://erpsmg.gmedia.id/inventory_v2/api/";
 //    public static final String GET_SITE = BASE_URL + "Customer/list_site";
 
     public static Retrofit getApi() {
