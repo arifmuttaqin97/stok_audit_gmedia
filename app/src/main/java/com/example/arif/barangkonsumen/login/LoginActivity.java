@@ -22,6 +22,7 @@ import com.example.arif.barangkonsumen.retrofit.RetrofitService;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -77,21 +78,27 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                             if (response.body() != null) {
-                                String responseLogin = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                                if (response.body().getResponse() instanceof LinkedTreeMap) {
-                                    LinkedTreeMap linkedTreeMap = (LinkedTreeMap) response.body().getResponse();
-                                    editor.putString("username", (String) linkedTreeMap.get("username"));
-                                    editor.putString("nik", (String) linkedTreeMap.get("nik"));
-                                    editor.putString("nama", (String) linkedTreeMap.get("nama"));
-                                    editor.apply();
+                                if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                                    String responseLogin = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                                    if (response.body().getResponse() instanceof LinkedTreeMap) {
+                                        LinkedTreeMap linkedTreeMap = (LinkedTreeMap) response.body().getResponse();
+                                        editor.putString("username", (String) linkedTreeMap.get("username"));
+                                        editor.putString("nik", (String) linkedTreeMap.get("nik"));
+                                        editor.putString("nama", (String) linkedTreeMap.get("nama"));
+                                        editor.apply();
 
-                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(i);
-                                    finish();
+                                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(i);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                        Log.d(LOGIN, responseLogin);
+                                    }
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Kombinasi antara username dan password salah", Toast.LENGTH_SHORT).show();
-                                    Log.d(LOGIN, responseLogin);
+                                    Toast.makeText(LoginActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                                    Log.d(LOGIN, response.body().getMetadata().get("message"));
                                 }
+
                             }
                         }
 

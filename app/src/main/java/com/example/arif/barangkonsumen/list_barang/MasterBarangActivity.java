@@ -80,8 +80,8 @@ public class MasterBarangActivity extends AppCompatActivity {
         headerMap.put("Client-Service", "gmedia-stok-audit");
         headerMap.put("Auth-Key", "gmedia");
         headerMap.put("Content-Type", "application/json");
-        headerMap.put("Timestamp", "11017201850101101");
-        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
+//        headerMap.put("Timestamp", "11017201850101101");
+//        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
 
         id_lokasi = getIntent().getStringExtra("id_lokasi");
         nama_site = getIntent().getStringExtra("nama_site");
@@ -100,63 +100,69 @@ public class MasterBarangActivity extends AppCompatActivity {
         RetrofitService retrofitService = RetrofitBuilder.getApi().create(RetrofitService.class);
         Call<ApiResponse> call = retrofitService.listBarang(headerMap, hashListBarang);
         call.enqueue(new Callback<ApiResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.body() != null) {
-                    String responseMaster = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof List) {
-                        List list = (List) response.body().getResponse();
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseMaster = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof List) {
+                            List list = (List) response.body().getResponse();
 
-                        for (Object object : list) {
-                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
+                            for (Object object : list) {
+                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
 
-                            listBarang = new ListBarangResponseData(
-                                    (String) linkedTreeMap.get("id_header"),
-                                    (String) linkedTreeMap.get("nama_barang"),
-                                    (String) linkedTreeMap.get("merk"),
-                                    (String) linkedTreeMap.get("type"),
-                                    (String) linkedTreeMap.get("kode"),
-                                    (String) linkedTreeMap.get("id_ukuran"),
-                                    (String) linkedTreeMap.get("qty"),
-                                    (String) linkedTreeMap.get("qty_small"),
-                                    (String) linkedTreeMap.get("min_stock"),
-                                    (String) linkedTreeMap.get("max_stock"),
-                                    (String) linkedTreeMap.get("harga_jual"),
-                                    (String) linkedTreeMap.get("id_aktif"),
-                                    (String) linkedTreeMap.get("gambar"),
-                                    (String) linkedTreeMap.get("keterangan"),
-                                    (String) linkedTreeMap.get("user_input"),
-                                    (String) linkedTreeMap.get("tanggal_input"),
-                                    (String) linkedTreeMap.get("user_update"),
-                                    (String) linkedTreeMap.get("tanggal_update"),
-                                    (String) linkedTreeMap.get("flag"),
-                                    (String) linkedTreeMap.get("id_kategori"),
-                                    (String) linkedTreeMap.get("id_tipe"),
-                                    (String) linkedTreeMap.get("id_satuan_kecil")
-                            );
-                            arrayListBarang.add(listBarang);
-                        }
-                        listMaster.setAdapter(null);
-                        listBarangAdapter = new ListBarangAdapter(MasterBarangActivity.this, arrayListBarang, id_lokasi, nama_site);
-                        listMaster.setAdapter(listBarangAdapter);
-                        listMaster.setOnScrollListener(new AbsListView.OnScrollListener() {
-                            @Override
-                            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+                                listBarang = new ListBarangResponseData(
+                                        (String) linkedTreeMap.get("id_header"),
+                                        (String) linkedTreeMap.get("nama_barang"),
+                                        (String) linkedTreeMap.get("merk"),
+                                        (String) linkedTreeMap.get("type"),
+                                        (String) linkedTreeMap.get("kode"),
+                                        (String) linkedTreeMap.get("id_ukuran"),
+                                        (String) linkedTreeMap.get("qty"),
+                                        (String) linkedTreeMap.get("qty_small"),
+                                        (String) linkedTreeMap.get("min_stock"),
+                                        (String) linkedTreeMap.get("max_stock"),
+                                        (String) linkedTreeMap.get("harga_jual"),
+                                        (String) linkedTreeMap.get("id_aktif"),
+                                        (String) linkedTreeMap.get("gambar"),
+                                        (String) linkedTreeMap.get("keterangan"),
+                                        (String) linkedTreeMap.get("user_input"),
+                                        (String) linkedTreeMap.get("tanggal_input"),
+                                        (String) linkedTreeMap.get("user_update"),
+                                        (String) linkedTreeMap.get("tanggal_update"),
+                                        (String) linkedTreeMap.get("flag"),
+                                        (String) linkedTreeMap.get("id_kategori"),
+                                        (String) linkedTreeMap.get("id_tipe"),
+                                        (String) linkedTreeMap.get("id_satuan_kecil")
+                                );
+                                arrayListBarang.add(listBarang);
                             }
+                            listMaster.setAdapter(null);
+                            listBarangAdapter = new ListBarangAdapter(MasterBarangActivity.this, arrayListBarang, id_lokasi, nama_site);
+                            listMaster.setAdapter(listBarangAdapter);
+                            listMaster.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                @Override
+                                public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-                            @Override
-                            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                                if (view.getLastVisiblePosition() == totalItemCount - 1 && listMaster.getCount() > (count - 1)) {
-                                    startIndex += count;
-                                    getMore(search);
                                 }
-                            }
-                        });
+
+                                @Override
+                                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                                    if (view.getLastVisiblePosition() == totalItemCount - 1 && listMaster.getCount() > (count - 1)) {
+                                        startIndex += count;
+                                        getMore(search);
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(MasterBarangActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            Log.d(MASTER, responseMaster);
+                        }
                     } else {
-                        Toast.makeText(MasterBarangActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(MASTER, responseMaster);
+                        Toast.makeText(MasterBarangActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(MASTER, response.body().getMetadata().get("message"));
                     }
                 }
             }
@@ -181,52 +187,58 @@ public class MasterBarangActivity extends AppCompatActivity {
         RetrofitService retrofitService = RetrofitBuilder.getApi().create(RetrofitService.class);
         Call<ApiResponse> call = retrofitService.listBarang(headerMap, hashListBarang);
         call.enqueue(new Callback<ApiResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.body() != null) {
-                    String responseMaster = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof List) {
-                        List list = (List) response.body().getResponse();
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseMaster = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof List) {
+                            List list = (List) response.body().getResponse();
 
-                        for (Object object : list) {
-                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
+                            for (Object object : list) {
+                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
 
-                            listBarang = new ListBarangResponseData(
-                                    (String) linkedTreeMap.get("id_header"),
-                                    (String) linkedTreeMap.get("nama_barang"),
-                                    (String) linkedTreeMap.get("merk"),
-                                    (String) linkedTreeMap.get("type"),
-                                    (String) linkedTreeMap.get("kode"),
-                                    (String) linkedTreeMap.get("id_ukuran"),
-                                    (String) linkedTreeMap.get("qty"),
-                                    (String) linkedTreeMap.get("qty_small"),
-                                    (String) linkedTreeMap.get("min_stock"),
-                                    (String) linkedTreeMap.get("max_stock"),
-                                    (String) linkedTreeMap.get("harga_jual"),
-                                    (String) linkedTreeMap.get("id_aktif"),
-                                    (String) linkedTreeMap.get("gambar"),
-                                    (String) linkedTreeMap.get("keterangan"),
-                                    (String) linkedTreeMap.get("user_input"),
-                                    (String) linkedTreeMap.get("tanggal_input"),
-                                    (String) linkedTreeMap.get("user_update"),
-                                    (String) linkedTreeMap.get("tanggal_update"),
-                                    (String) linkedTreeMap.get("flag"),
-                                    (String) linkedTreeMap.get("id_kategori"),
-                                    (String) linkedTreeMap.get("id_tipe"),
-                                    (String) linkedTreeMap.get("id_satuan_kecil")
-                            );
-                            arrayListBarang.add(listBarang);
-                        }
-                        if (listBarangAdapter != null) {
-                            listBarangAdapter.addMore(arrayListBarang);
+                                listBarang = new ListBarangResponseData(
+                                        (String) linkedTreeMap.get("id_header"),
+                                        (String) linkedTreeMap.get("nama_barang"),
+                                        (String) linkedTreeMap.get("merk"),
+                                        (String) linkedTreeMap.get("type"),
+                                        (String) linkedTreeMap.get("kode"),
+                                        (String) linkedTreeMap.get("id_ukuran"),
+                                        (String) linkedTreeMap.get("qty"),
+                                        (String) linkedTreeMap.get("qty_small"),
+                                        (String) linkedTreeMap.get("min_stock"),
+                                        (String) linkedTreeMap.get("max_stock"),
+                                        (String) linkedTreeMap.get("harga_jual"),
+                                        (String) linkedTreeMap.get("id_aktif"),
+                                        (String) linkedTreeMap.get("gambar"),
+                                        (String) linkedTreeMap.get("keterangan"),
+                                        (String) linkedTreeMap.get("user_input"),
+                                        (String) linkedTreeMap.get("tanggal_input"),
+                                        (String) linkedTreeMap.get("user_update"),
+                                        (String) linkedTreeMap.get("tanggal_update"),
+                                        (String) linkedTreeMap.get("flag"),
+                                        (String) linkedTreeMap.get("id_kategori"),
+                                        (String) linkedTreeMap.get("id_tipe"),
+                                        (String) linkedTreeMap.get("id_satuan_kecil")
+                                );
+                                arrayListBarang.add(listBarang);
+                            }
+                            if (listBarangAdapter != null) {
+                                listBarangAdapter.addMore(arrayListBarang);
+                            } else {
+                                Toast.makeText(MasterBarangActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                                Log.d(MASTER, responseMaster);
+                            }
                         } else {
                             Toast.makeText(MasterBarangActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
                             Log.d(MASTER, responseMaster);
                         }
                     } else {
-                        Toast.makeText(MasterBarangActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(MASTER, responseMaster);
+                        Toast.makeText(MasterBarangActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(MASTER, response.body().getMetadata().get("message"));
                     }
                 }
             }

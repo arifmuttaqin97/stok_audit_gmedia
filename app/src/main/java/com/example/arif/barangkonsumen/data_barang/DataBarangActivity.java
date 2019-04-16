@@ -113,8 +113,8 @@ public class DataBarangActivity extends AppCompatActivity {
 
         headerMap.put("Client-Service", "gmedia-stok-audit");
         headerMap.put("Auth-Key", "gmedia");
-        headerMap.put("Timestamp", "11017201850101101");
-        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
+//        headerMap.put("Timestamp", "11017201850101101");
+//        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
 
         String dataBarang = getIntent().getStringExtra("Master");
         testDataBarang.setText(dataBarang);
@@ -167,13 +167,18 @@ public class DataBarangActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                         if (response.body() != null) {
-                            Toast.makeText(DataBarangActivity.this, "Barang sudah berhasil disimpan", Toast.LENGTH_SHORT).show();
+                            if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                                Toast.makeText(DataBarangActivity.this, "Barang sudah berhasil disimpan", Toast.LENGTH_SHORT).show();
 
-                            Intent i = new Intent(DataBarangActivity.this, SavedActivity.class);
-                            i.putExtra("Site", id_lokasi);
-                            i.putExtra("Nama_Site", nama_site);
-                            startActivity(i);
-                            finish();
+                                Intent i = new Intent(DataBarangActivity.this, SavedActivity.class);
+                                i.putExtra("Site", id_lokasi);
+                                i.putExtra("Nama_Site", nama_site);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                Toast.makeText(DataBarangActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                                Log.d(DATA_BARANG, response.body().getMetadata().get("message"));
+                            }
                         }
                     }
 
@@ -228,17 +233,26 @@ public class DataBarangActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                         if (response.body() != null) {
-                            if (response.body().getResponse() instanceof LinkedTreeMap) {
-                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) response.body().getResponse();
-                                HashMap<String, Integer> hashImage = new HashMap<>();
+                            if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                                if (response.body().getResponse() instanceof LinkedTreeMap) {
+                                    LinkedTreeMap linkedTreeMap = (LinkedTreeMap) response.body().getResponse();
+                                    HashMap<String, Integer> hashImage = new HashMap<>();
 
-                                Double angkaTemp = (Double) linkedTreeMap.get("id");
+                                    Double angkaTemp = (Double) linkedTreeMap.get("id");
 
-                                assert angkaTemp != null;
+                                    assert angkaTemp != null;
 
-                                hashImage.put("id_image", angkaTemp.intValue());
-                                idResponse.add(hashImage);
+                                    hashImage.put("id_image", angkaTemp.intValue());
+                                    idResponse.add(hashImage);
+                                } else {
+                                    Toast.makeText(DataBarangActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                                    Log.d(DATA_BARANG, response.body().getMetadata().get("message"));
+                                }
+                            } else {
+                                Toast.makeText(DataBarangActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                                Log.d(DATA_BARANG, response.body().getMetadata().get("message"));
                             }
+
                         }
                     }
 

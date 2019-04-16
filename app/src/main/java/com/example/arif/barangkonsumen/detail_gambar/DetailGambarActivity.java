@@ -66,8 +66,8 @@ public class DetailGambarActivity extends AppCompatActivity {
         headerMap.put("Client-Service", "gmedia-stok-audit");
         headerMap.put("Auth-Key", "gmedia");
         headerMap.put("Content-Type", "application/json");
-        headerMap.put("Timestamp", "11017201850101101");
-        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
+//        headerMap.put("Timestamp", "11017201850101101");
+//        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
 
         id_serial = getIntent().getStringExtra("id_serial");
 
@@ -83,26 +83,31 @@ public class DetailGambarActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 if (response.body() != null) {
-                    String responseDetailGambar = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof LinkedTreeMap) {
-                        LinkedTreeMap linkedTreeMap = (LinkedTreeMap) response.body().getResponse();
-                        detailGambar.setText((String) linkedTreeMap.get("nama_barang"));
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseDetailGambar = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof LinkedTreeMap) {
+                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) response.body().getResponse();
+                            detailGambar.setText((String) linkedTreeMap.get("nama_barang"));
 
-                        ArrayList arrayList = (ArrayList) linkedTreeMap.get("data_image");
-                        assert arrayList != null;
+                            ArrayList arrayList = (ArrayList) linkedTreeMap.get("data_image");
+                            assert arrayList != null;
 
-                        ArrayList<String> arrayList1 = new ArrayList<>();
+                            ArrayList<String> arrayList1 = new ArrayList<>();
 
-                        for (Object object : arrayList) {
-                            LinkedTreeMap linkedTreeMap1 = (LinkedTreeMap) object;
-                            String tmpGambar = (String) linkedTreeMap1.get("image");
-                            arrayList1.add(tmpGambar);
+                            for (Object object : arrayList) {
+                                LinkedTreeMap linkedTreeMap1 = (LinkedTreeMap) object;
+                                String tmpGambar = (String) linkedTreeMap1.get("image");
+                                arrayList1.add(tmpGambar);
+                            }
+                            detailGambarAdapter = new DetailGambarAdapter(arrayList1);
+                            rvGambar.setAdapter(detailGambarAdapter);
+                        } else {
+                            Toast.makeText(DetailGambarActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            Log.d(GAMBAR, responseDetailGambar);
                         }
-                        detailGambarAdapter = new DetailGambarAdapter(arrayList1);
-                        rvGambar.setAdapter(detailGambarAdapter);
                     } else {
-                        Toast.makeText(DetailGambarActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(GAMBAR, responseDetailGambar);
+                        Toast.makeText(DetailGambarActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(GAMBAR, response.body().getMetadata().get("message"));
                     }
                 }
             }

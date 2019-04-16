@@ -20,9 +20,7 @@ public interface RetrofitService {
     @Headers({
             "Client-Service: gmedia-stok-audit",
             "Auth-Key: gmedia",
-            "Content-Type: application/json",
-            "Timestamp: 11017201850101101",
-            "Signature: FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE="
+            "Content-Type: application/json"
     })
     @POST("authentication/index")
     Call<ApiResponse> login(@Body HashMap<String, String> params);

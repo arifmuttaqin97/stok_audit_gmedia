@@ -1,28 +1,28 @@
 package com.example.arif.barangkonsumen.list_barang;
 
 class ListBarangResponseData {
-    String id_header,
-            nama_barang,
-            merk,
-            type,
-            kode,
-            id_ukuran,
-            qty,
-            qty_small,
-            min_stock,
-            max_stock,
-            harga_jual,
-            id_aktif,
-            gambar,
-            keterangan,
-            user_input,
-            tanggal_input,
-            user_update,
-            tanggal_update,
-            flag,
-            id_kategori,
-            id_tipe,
-            id_satuan_kecil;
+    String id_header;
+    String nama_barang;
+    private String merk;
+    private String type;
+    private String kode;
+    private String id_ukuran;
+    private String qty;
+    private String qty_small;
+    private String min_stock;
+    private String max_stock;
+    private String harga_jual;
+    private String id_aktif;
+    private String gambar;
+    private String keterangan;
+    private String user_input;
+    private String tanggal_input;
+    private String user_update;
+    private String tanggal_update;
+    private String flag;
+    private String id_kategori;
+    private String id_tipe;
+    private String id_satuan_kecil;
 
     ListBarangResponseData(String id_header, String nama_barang, String merk,
                            String type, String kode, String id_ukuran,

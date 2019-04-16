@@ -1,7 +1,9 @@
 package com.example.arif.barangkonsumen.customer;
 
 class CustomerResponseData {
-    String customer_id, customer_name, alamat;
+    String customer_id;
+    String customer_name;
+    private String alamat;
 
     CustomerResponseData(String customer_id, String customer_name, String alamat) {
         this.customer_id = customer_id;

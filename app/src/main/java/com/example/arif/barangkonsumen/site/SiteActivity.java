@@ -84,8 +84,8 @@ public class SiteActivity extends AppCompatActivity {
         headerMap.put("Client-Service", "gmedia-stok-audit");
         headerMap.put("Auth-Key", "gmedia");
         headerMap.put("Content-Type", "application/json");
-        headerMap.put("Timestamp", "11017201850101101");
-        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
+//        headerMap.put("Timestamp", "11017201850101101");
+//        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
 
         customer = getIntent().getStringExtra("Customer");
         nama_customer = getIntent().getStringExtra("Nama_Customer");
@@ -107,47 +107,53 @@ public class SiteActivity extends AppCompatActivity {
         RetrofitService retrofitService = RetrofitBuilder.getApi().create(RetrofitService.class);
         Call<ApiResponse> call = retrofitService.customerSite(headerMap, hashCustomerSite);
         call.enqueue(new Callback<ApiResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.body() != null) {
-                    String responseSite = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof List) {
-                        List list = (List) response.body().getResponse();
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseSite = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof List) {
+                            List list = (List) response.body().getResponse();
 
-                        for (Object object : list) {
-                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
+                            for (Object object : list) {
+                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
 
-                            site = new SiteResponseData(
-                                    (String) linkedTreeMap.get("id_site"),
-                                    (String) linkedTreeMap.get("service_id"),
-                                    (String) linkedTreeMap.get("nama_site"),
-                                    (String) linkedTreeMap.get("alamat_site"),
-                                    (String) linkedTreeMap.get("kota_site"),
-                                    (String) linkedTreeMap.get("telp_site")
-                            );
-                            arrayCustomerSite.add(site);
-                        }
-                        listSite.setAdapter(null);
-                        siteAdapter = new SiteAdapter(SiteActivity.this, arrayCustomerSite);
-                        listSite.setAdapter(siteAdapter);
-                        listSite.setOnScrollListener(new AbsListView.OnScrollListener() {
-                            @Override
-                            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+                                site = new SiteResponseData(
+                                        (String) linkedTreeMap.get("id_site"),
+                                        (String) linkedTreeMap.get("service_id"),
+                                        (String) linkedTreeMap.get("nama_site"),
+                                        (String) linkedTreeMap.get("alamat_site"),
+                                        (String) linkedTreeMap.get("kota_site"),
+                                        (String) linkedTreeMap.get("telp_site")
+                                );
+                                arrayCustomerSite.add(site);
                             }
+                            listSite.setAdapter(null);
+                            siteAdapter = new SiteAdapter(SiteActivity.this, arrayCustomerSite);
+                            listSite.setAdapter(siteAdapter);
+                            listSite.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                @Override
+                                public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-                            @Override
-                            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                                if (view.getLastVisiblePosition() == totalItemCount - 1 && listSite.getCount() > (count - 1)) {
-                                    startIndex += count;
-                                    getMore(search, params);
                                 }
-                            }
-                        });
+
+                                @Override
+                                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                                    if (view.getLastVisiblePosition() == totalItemCount - 1 && listSite.getCount() > (count - 1)) {
+                                        startIndex += count;
+                                        getMore(search, params);
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(SiteActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            Log.d(SITE, responseSite);
+                        }
                     } else {
-                        Toast.makeText(SiteActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(SITE, responseSite);
+                        Toast.makeText(SiteActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(SITE, response.body().getMetadata().get("message"));
                     }
                 }
             }
@@ -173,38 +179,44 @@ public class SiteActivity extends AppCompatActivity {
         RetrofitService retrofitService = RetrofitBuilder.getApi().create(RetrofitService.class);
         Call<ApiResponse> call = retrofitService.customerSite(headerMap, hashCustomerSite);
         call.enqueue(new Callback<ApiResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.body() != null) {
-                    String responseSite = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof List) {
-                        List list = (List) response.body().getResponse();
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseSite = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof List) {
+                            List list = (List) response.body().getResponse();
 
-                        for (Object object : list) {
-                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
+                            for (Object object : list) {
+                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
 
-                            site = new SiteResponseData(
-                                    (String) linkedTreeMap.get("id_site"),
-                                    (String) linkedTreeMap.get("service_id"),
-                                    (String) linkedTreeMap.get("nama_site"),
-                                    (String) linkedTreeMap.get("alamat_site"),
-                                    (String) linkedTreeMap.get("kota_site"),
-                                    (String) linkedTreeMap.get("telp_site")
-                            );
-                            arrayCustomerSite.add(site);
-                        }
+                                site = new SiteResponseData(
+                                        (String) linkedTreeMap.get("id_site"),
+                                        (String) linkedTreeMap.get("service_id"),
+                                        (String) linkedTreeMap.get("nama_site"),
+                                        (String) linkedTreeMap.get("alamat_site"),
+                                        (String) linkedTreeMap.get("kota_site"),
+                                        (String) linkedTreeMap.get("telp_site")
+                                );
+                                arrayCustomerSite.add(site);
+                            }
 
-                        if (siteAdapter != null) {
-                            siteAdapter.addMore(arrayCustomerSite);
+                            if (siteAdapter != null) {
+                                siteAdapter.addMore(arrayCustomerSite);
+                            } else {
+                                Log.d(SITE, responseSite);
+                                Toast.makeText(SiteActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            }
+
                         } else {
-                            Log.d(SITE, responseSite);
                             Toast.makeText(SiteActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            Log.d(SITE, responseSite);
                         }
-
                     } else {
-                        Toast.makeText(SiteActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(SITE, responseSite);
+                        Toast.makeText(SiteActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(SITE, response.body().getMetadata().get("message"));
                     }
                 }
             }

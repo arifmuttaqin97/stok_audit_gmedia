@@ -1,7 +1,12 @@
 package com.example.arif.barangkonsumen.site;
 
 class SiteResponseData {
-    String id_site, service_id, nama_site, alamat_site, kota_site, telp_site;
+    String id_site;
+    private String service_id;
+    String nama_site;
+    private String alamat_site;
+    private String kota_site;
+    private String telp_site;
 
     SiteResponseData(String id_site, String service_id, String nama_site, String alamat_site, String kota_site, String telp_site) {
         this.id_site = id_site;

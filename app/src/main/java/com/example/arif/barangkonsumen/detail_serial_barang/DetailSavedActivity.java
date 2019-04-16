@@ -80,8 +80,8 @@ public class DetailSavedActivity extends AppCompatActivity {
         headerMap.put("Client-Service", "gmedia-stok-audit");
         headerMap.put("Auth-Key", "gmedia");
         headerMap.put("Content-Type", "application/json");
-        headerMap.put("Timestamp", "11017201850101101");
-        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
+//        headerMap.put("Timestamp", "11017201850101101");
+//        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
     }
 
     private void getSerial() {
@@ -98,46 +98,52 @@ public class DetailSavedActivity extends AppCompatActivity {
         RetrofitService retrofitService = RetrofitBuilder.getApi().create(RetrofitService.class);
         Call<ApiResponse> call = retrofitService.detailSerial(headerMap, hashSerial);
         call.enqueue(new Callback<ApiResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.body() != null) {
-                    String responseSerial = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof List) {
-                        List list = (List) response.body().getResponse();
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseSerial = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof List) {
+                            List list = (List) response.body().getResponse();
 
-                        for (Object object : list) {
-                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
+                            for (Object object : list) {
+                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
 
-                            serial = new DetailSerialResponseData(
-                                    (String) linkedTreeMap.get("id_serial"),
-                                    (String) linkedTreeMap.get("id_barang"),
-                                    (String) linkedTreeMap.get("id_lokasi"),
-                                    (String) linkedTreeMap.get("nama_barang"),
-                                    (String) linkedTreeMap.get("serial")
-                            );
-                            arraySerial.add(serial);
-                        }
-                        listSerial.setAdapter(null);
-                        serialAdapter = new DetailSerialAdapter(DetailSavedActivity.this, arraySerial);
-                        listSerial.setAdapter(serialAdapter);
-                        listSerial.setOnScrollListener(new AbsListView.OnScrollListener() {
-                            @Override
-                            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+                                serial = new DetailSerialResponseData(
+                                        (String) linkedTreeMap.get("id_serial"),
+                                        (String) linkedTreeMap.get("id_barang"),
+                                        (String) linkedTreeMap.get("id_lokasi"),
+                                        (String) linkedTreeMap.get("nama_barang"),
+                                        (String) linkedTreeMap.get("serial")
+                                );
+                                arraySerial.add(serial);
                             }
+                            listSerial.setAdapter(null);
+                            serialAdapter = new DetailSerialAdapter(DetailSavedActivity.this, arraySerial);
+                            listSerial.setAdapter(serialAdapter);
+                            listSerial.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                @Override
+                                public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-                            @Override
-                            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                                if (view.getLastVisiblePosition() == totalItemCount - 1 && listSerial.getCount() > (count - 1)) {
-                                    startIndex += count;
-                                    getMore();
                                 }
-                            }
-                        });
+
+                                @Override
+                                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                                    if (view.getLastVisiblePosition() == totalItemCount - 1 && listSerial.getCount() > (count - 1)) {
+                                        startIndex += count;
+                                        getMore();
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(DetailSavedActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            Log.d(SERIAL, responseSerial);
+                        }
                     } else {
-                        Toast.makeText(DetailSavedActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(SERIAL, responseSerial);
+                        Toast.makeText(DetailSavedActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(SERIAL, response.body().getMetadata().get("message"));
                     }
                 }
             }
@@ -163,37 +169,43 @@ public class DetailSavedActivity extends AppCompatActivity {
         RetrofitService retrofitService = RetrofitBuilder.getApi().create(RetrofitService.class);
         Call<ApiResponse> call = retrofitService.detailSerial(headerMap, hashSerial);
         call.enqueue(new Callback<ApiResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.body() != null) {
-                    String responseSerial = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof List) {
-                        List list = (List) response.body().getResponse();
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseSerial = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof List) {
+                            List list = (List) response.body().getResponse();
 
-                        for (Object object : list) {
-                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
+                            for (Object object : list) {
+                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
 
-                            serial = new DetailSerialResponseData(
-                                    (String) linkedTreeMap.get("id_serial"),
-                                    (String) linkedTreeMap.get("id_barang"),
-                                    (String) linkedTreeMap.get("id_lokasi"),
-                                    (String) linkedTreeMap.get("nama_barang"),
-                                    (String) linkedTreeMap.get("serial")
-                            );
-                            arraySerial.add(serial);
-                        }
+                                serial = new DetailSerialResponseData(
+                                        (String) linkedTreeMap.get("id_serial"),
+                                        (String) linkedTreeMap.get("id_barang"),
+                                        (String) linkedTreeMap.get("id_lokasi"),
+                                        (String) linkedTreeMap.get("nama_barang"),
+                                        (String) linkedTreeMap.get("serial")
+                                );
+                                arraySerial.add(serial);
+                            }
 
-                        if (serialAdapter != null) {
-                            serialAdapter.addMore(arraySerial);
+                            if (serialAdapter != null) {
+                                serialAdapter.addMore(arraySerial);
+                            } else {
+                                Log.d(SERIAL, responseSerial);
+                                Toast.makeText(DetailSavedActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            }
+
                         } else {
-                            Log.d(SERIAL, responseSerial);
                             Toast.makeText(DetailSavedActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            Log.d(SERIAL, responseSerial);
                         }
-
                     } else {
-                        Toast.makeText(DetailSavedActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(SERIAL, responseSerial);
+                        Toast.makeText(DetailSavedActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(SERIAL, response.body().getMetadata().get("message"));
                     }
                 }
             }

@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         headerMap.put("Client-Service", "gmedia-stok-audit");
         headerMap.put("Auth-Key", "gmedia");
         headerMap.put("Content-Type", "application/json");
-        headerMap.put("Timestamp", "11017201850101101");
-        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
+//        headerMap.put("Timestamp", "11017201850101101");
+//        headerMap.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
     }
 
     private void getCustomer(final String search) {
@@ -95,45 +95,52 @@ public class MainActivity extends AppCompatActivity {
         RetrofitService retrofitService = RetrofitBuilder.getApi().create(RetrofitService.class);
         Call<ApiResponse> call = retrofitService.customer(headerMap, hashCustomer);
         call.enqueue(new Callback<ApiResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.body() != null) {
-                    String responseCustomer = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof List) {
-                        List list = (List) response.body().getResponse();
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseCustomer = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof List) {
+                            List list = (List) response.body().getResponse();
 
-                        for (Object object : list) {
-                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
+                            for (Object object : list) {
+                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
 
-                            customer = new CustomerResponseData(
-                                    (String) linkedTreeMap.get("customer_id"),
-                                    (String) linkedTreeMap.get("customer_name"),
-                                    (String) linkedTreeMap.get("alamat")
-                            );
-                            arrayCustomer.add(customer);
-                        }
-                        listMain.setAdapter(null);
-                        customerAdapter = new CustomerAdapter(MainActivity.this, arrayCustomer);
-                        listMain.setAdapter(customerAdapter);
-                        listMain.setOnScrollListener(new AbsListView.OnScrollListener() {
-                            @Override
-                            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+                                customer = new CustomerResponseData(
+                                        (String) linkedTreeMap.get("customer_id"),
+                                        (String) linkedTreeMap.get("customer_name"),
+                                        (String) linkedTreeMap.get("alamat")
+                                );
+                                arrayCustomer.add(customer);
                             }
+                            listMain.setAdapter(null);
+                            customerAdapter = new CustomerAdapter(MainActivity.this, arrayCustomer);
+                            listMain.setAdapter(customerAdapter);
+                            listMain.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                @Override
+                                public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-                            @Override
-                            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                                if (view.getLastVisiblePosition() == totalItemCount - 1 && listMain.getCount() > (count - 1)) {
-                                    startIndex += count;
-                                    getMore(search);
                                 }
-                            }
-                        });
+
+                                @Override
+                                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                                    if (view.getLastVisiblePosition() == totalItemCount - 1 && listMain.getCount() > (count - 1)) {
+                                        startIndex += count;
+                                        getMore(search);
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(MainActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            Log.d(CUSTOMER, responseCustomer);
+                        }
                     } else {
-                        Toast.makeText(MainActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(CUSTOMER, responseCustomer);
+                        Toast.makeText(MainActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(CUSTOMER, response.body().getMetadata().get("message"));
                     }
+
                 }
             }
 
@@ -157,36 +164,43 @@ public class MainActivity extends AppCompatActivity {
         RetrofitService retrofitService = RetrofitBuilder.getApi().create(RetrofitService.class);
         Call<ApiResponse> call = retrofitService.customer(headerMap, hashCustomer);
         call.enqueue(new Callback<ApiResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 progressBar.setVisibility(View.INVISIBLE);
                 if (response.body() != null) {
-                    String responseCustomer = response.body().getResponse().toString() + response.body().getMetadata().toString();
-                    if (response.body().getResponse() instanceof List) {
-                        List list = (List) response.body().getResponse();
+                    if (Objects.equals(response.body().getMetadata().get("status"), "200")) {
+                        String responseCustomer = response.body().getResponse().toString() + response.body().getMetadata().toString();
+                        if (response.body().getResponse() instanceof List) {
+                            List list = (List) response.body().getResponse();
 
-                        for (Object object : list) {
-                            LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
+                            for (Object object : list) {
+                                LinkedTreeMap linkedTreeMap = (LinkedTreeMap) object;
 
-                            customer = new CustomerResponseData(
-                                    (String) linkedTreeMap.get("customer_id"),
-                                    (String) linkedTreeMap.get("customer_name"),
-                                    (String) linkedTreeMap.get("alamat")
-                            );
-                            arrayCustomer.add(customer);
-                        }
+                                customer = new CustomerResponseData(
+                                        (String) linkedTreeMap.get("customer_id"),
+                                        (String) linkedTreeMap.get("customer_name"),
+                                        (String) linkedTreeMap.get("alamat")
+                                );
+                                arrayCustomer.add(customer);
+                            }
 
-                        if (customerAdapter != null) {
-                            customerAdapter.addMore(arrayCustomer);
+                            if (customerAdapter != null) {
+                                customerAdapter.addMore(arrayCustomer);
+                            } else {
+                                Log.d(CUSTOMER, responseCustomer);
+                                Toast.makeText(MainActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            }
+
                         } else {
-                            Log.d(CUSTOMER, responseCustomer);
                             Toast.makeText(MainActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
+                            Log.d(CUSTOMER, responseCustomer);
                         }
-
                     } else {
-                        Toast.makeText(MainActivity.this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                        Log.d(CUSTOMER, responseCustomer);
+                        Toast.makeText(MainActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Log.d(CUSTOMER, response.body().getMetadata().get("message"));
                     }
+
                 }
             }
 
