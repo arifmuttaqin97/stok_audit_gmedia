@@ -56,11 +56,11 @@ public class DetailGambarActivity extends AppCompatActivity {
         mLogin = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         if (mLogin.contains("username") && mLogin.contains("nik")) {
-            headerMap.put("User-Name", Objects.requireNonNull(mLogin.getString("username", "akbar")));
-            headerMap.put("User-Id", Objects.requireNonNull(mLogin.getString("nik", "03.121.2017")));
+            headerMap.put("User-Name", Objects.requireNonNull(mLogin.getString("username", "")));
+            headerMap.put("User-Id", Objects.requireNonNull(mLogin.getString("nik", "")));
         } else {
-            headerMap.put("User-Name", "akbar");
-            headerMap.put("User-Id", "03.121.2017");
+            headerMap.put("User-Name", "");
+            headerMap.put("User-Id", "");
         }
 
         headerMap.put("Client-Service", "gmedia-stok-audit");
@@ -106,7 +106,7 @@ public class DetailGambarActivity extends AppCompatActivity {
                             Log.d(GAMBAR, responseDetailGambar);
                         }
                     } else {
-                        Toast.makeText(DetailGambarActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailGambarActivity.this, response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
                         Log.d(GAMBAR, response.body().getMetadata().get("message"));
                     }
                 }

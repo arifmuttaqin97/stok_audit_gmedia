@@ -102,8 +102,8 @@
 //                params.put("Auth-Key", "gmedia");
 //                params.put("Timestamp", "11017201850101101");
 //                params.put("Signature", "FWCcb1F1hAq+Q4/J3gJt4v6pgM5L2oKbW/KmWywfUDE=");
-//                params.put("User-Name", "akbar");
-//                params.put("User-Id", "03.121.2017");
+//                params.put("User-Name", "");
+//                params.put("User-Id", "");
 //                return params;
 //            }
 //

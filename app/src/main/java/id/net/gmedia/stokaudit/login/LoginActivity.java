@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Log.d(LOGIN, responseLogin);
                                     }
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Terjadi kesalahan : " + response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, response.body().getMetadata().get("message"), Toast.LENGTH_SHORT).show();
                                     Log.d(LOGIN, response.body().getMetadata().get("message"));
                                 }
 
